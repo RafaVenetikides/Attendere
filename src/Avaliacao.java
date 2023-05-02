@@ -6,7 +6,7 @@
 // 1 - Ruim
 
 public enum Avaliacao {
-    one, two, three, four, five;
+    five, four, three, two, one;
     public static Avaliacao fromInt(int valor){
         return switch (valor) {
             case 1 -> one;

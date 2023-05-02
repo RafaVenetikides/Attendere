@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 // lista agrega todas as sessões
@@ -10,8 +11,8 @@ public class Lista implements Iterable<Sessao>{
 
 	// construtor
 
-	public Lista(ArrayList<Sessao> lista) {
-		this.lista = lista;
+	public Lista() {
+		this.lista = new ArrayList<Sessao>();
 	}
 
 	// getters e setters
@@ -37,8 +38,23 @@ public class Lista implements Iterable<Sessao>{
 	
 	@Override
 	public Iterator<Sessao> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return lista.iterator();
+	}
+
+	public void ordemAlfabetica(){
+		Collections.sort(lista);
+	}
+
+	public void sortAvaliacao(){
+		Collections.sort(lista, new Comparator<Sessao>() {
+			@Override
+			public int compare(Sessao o1, Sessao o2) {
+				if (o1.getFilme().getNota() == o2.getFilme().getNota()){
+					return o1.getFilme().getNome().compareToIgnoreCase(o2.getFilme().getNome());
+				}
+				return o1.getFilme().getNota().compareTo(o2.getFilme().getNota());
+			}
+		});
 	}
 	
 	// toString

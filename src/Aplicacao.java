@@ -1,12 +1,13 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Aplicacao {
 	
 	// usar a lista de sessões
-	private static Lista watchlist;
+	private static Lista watchlist = new Lista();
 	// para simular o banco de dados dos locais
 	private static ArrayList<Local> locais;
 
@@ -28,6 +29,19 @@ public class Aplicacao {
 		// 6 - Listagem cronológica
 		// 7 - Listagem favoritos
 
+		Sessao s1 = new Sessao(new Filme("Star Wars",  true, Avaliacao.fromInt(5),"legal :)"),
+					new Local("Muller", "Cinemark"),
+					15.50F, LocalDate.of(2022, 7, 12), LocalTime.of(12, 30));
+		Sessao s2 = new Sessao(new Filme("Hobbit",  true, Avaliacao.fromInt(4),"massa :D"),
+				new Local("Barigui", "Cinemark"),
+				21.50F, LocalDate.of(2023, 8, 2), LocalTime.of(15, 0));
+		Sessao s3 = new Sessao(new Filme("Zombieland",  false, Avaliacao.fromInt(4),"bom :)"),
+				new Local("Jockey", "Cinepolis"),
+				35.50F, LocalDate.of(2020, 9, 22), LocalTime.of(17, 45));
+		watchlist.add(s1);
+		watchlist.add(s2);
+		watchlist.add(s3);
+
 		do{
 			System.out.println("+-------------------------------------------+");
 			System.out.println("|                 Attendere                 |");
@@ -46,7 +60,15 @@ public class Aplicacao {
 			teclado.nextLine();
 			switch (opcao){
 				case 1:
-					watchlist.add(novaSessao(new Local("Agua verde", "Cinemark")));
+					watchlist.add(novaSessao());
+					break;
+				case 4:
+					watchlist.ordemAlfabetica();
+					imprimelista();
+					break;
+				case 5:
+					watchlist.sortAvaliacao();
+					imprimelista();
 					break;
 			}
 
@@ -57,7 +79,7 @@ public class Aplicacao {
 		Boolean favorito;
 		Avaliacao avaliacao = null;
 		String comentario = null;
-		System.out.println(" NOVO FILME ");
+		System.out.println("======= DADOS DO FILME =======");
 		System.out.print("Informe o nome: ");
 		nome = teclado.nextLine();
 		System.out.println("Deseja adicionar o Filme aos favoritos? (S/N)");
@@ -76,7 +98,7 @@ public class Aplicacao {
 		}
 		System.out.println("Deseja comentar o filme? (S/N)");
 		resposta = teclado.nextLine();
-		if (resposta.equalsIgnoreCase("S")){
+		if (resposta.equalsIgnoreCase("S")) {
 			System.out.print("Comentário: ");
 			comentario = teclado.nextLine();
 		}
@@ -88,34 +110,73 @@ public class Aplicacao {
 			return new Filme(nome, favorito, avaliacao);
 		}
 	}
-	private static Sessao novaSessao(Local local){
-		int preco;
+	private static Local novolocal(){
+
+		String nome;
+		String franquia;
+
+		System.out.println("======= NOVO LOCAL =======");
+
+		System.out.println("Qual o nome do local da sessão?");
+		nome = teclado.nextLine();
+
+		System.out.println("Qual a franquia da sessão?");
+		franquia = teclado.nextLine();
+
+		System.out.println("==============================");
+
+		return new Local(nome, franquia);
+	}
+	private static Sessao novaSessao(){
+
+		String comentario = null;
+		String opcao;
+		float preco;
+		String data;
 		int dia;
 		int mes;
 		int ano;
+		String horario;
 		int hour;
 		int min;
+
+		System.out.println("======= DADOS DA SESSÃO =======");
+
 		System.out.println("Qual foi o preco do ingresso?");
-		preco = teclado.nextInt();
-		teclado.nextLine();
-		System.out.println("Qual foi o dia da sua sessão?");
-		dia = teclado.nextInt();
-		teclado.nextLine();
-		System.out.println("Qual foi o mês da sua sessão?");
-		mes = teclado.nextInt();
-		teclado.nextInt();
-		System.out.println("Qual foi o ano da sua sessão?");
-		ano = teclado.nextInt();
-		teclado.nextLine();
-		System.out.println("Qual a hora da sessão?");
-		hour = teclado.nextInt();
-		teclado.nextLine();
-		System.out.println("Qual os minutos da sessão?");
-		min = teclado.nextInt();
+		preco = teclado.nextFloat();
 		teclado.nextLine();
 
-		Sessao sessao = new Sessao(novoFilme(), local, preco, LocalDate.of(ano, mes, dia), LocalTime.of(hour, min));
-		return sessao;
+		System.out.println("Qual foi a data da sua sessão? (DD/MM/AAAA)");
+		data = teclado.nextLine();
+		String vetdata[] = data.split("/");
+		dia = Integer.parseInt(vetdata[0]);
+		mes = Integer.parseInt(vetdata[1]);
+		ano = Integer.parseInt(vetdata[2]);
+
+		System.out.println("Qual o horario da sua sessão? (HH:MM)");
+		horario = teclado.nextLine();
+		String vethorario[] = horario.split(":");
+		hour = Integer.parseInt(vethorario[0]);
+		min = Integer.parseInt(vethorario[1]);
+
+		System.out.println("Gostaria de comentar sobre a sessão? (S/N)");
+		opcao = teclado.nextLine();
+		if (opcao.equalsIgnoreCase("S")){
+			System.out.print("comentario: ");
+			comentario = teclado.nextLine();
+		}
+		if (comentario == null){
+			return new Sessao(novoFilme(), novolocal(), preco, LocalDate.of(ano, mes, dia), LocalTime.of(hour, min));
+		} else {
+			return new Sessao(novoFilme(), novolocal(), preco, LocalDate.of(ano, mes, dia), LocalTime.of(hour, min), comentario);
+		}
+	}
+	private static void imprimelista(){
+		Iterator<Sessao> iterator = watchlist.iterator();
+		while (iterator.hasNext()){
+			Sessao sessao = iterator.next();
+			System.out.println(sessao);
+		}
 	}
 }
 

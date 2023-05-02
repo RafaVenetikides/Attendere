@@ -1,7 +1,8 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 
-public class Sessao {
+public class Sessao implements Comparable<Sessao>{
 	private Filme filme;
 	private Local local;
 	private float preco;
@@ -86,6 +87,10 @@ public class Sessao {
 				", horario=" + horario +
 				", comentario='" + comentario + '\'' +
 				'}';
+	}
+
+	public int compareTo(Sessao sessao) {
+		return getFilme().getNome().compareToIgnoreCase(sessao.getFilme().getNome());
 	}
 
 	// ter um atributo comentário no filme OU Sessão

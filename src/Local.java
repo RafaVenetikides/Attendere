@@ -13,4 +13,12 @@ public class Local {
 	// private String franquia; // Cinemark, etc
 	// comentário
 
+
+	@Override
+	public String toString() {
+		return "Local{" +
+				"nome='" + nome + '\'' +
+				", franquia='" + franquia + '\'' +
+				'}';
+	}
 }

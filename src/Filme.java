@@ -1,5 +1,5 @@
 
-public class Filme implements Comparable<Filme> {
+public class Filme {
 	private String nome;
 	private Avaliacao nota;
 	private boolean favorito;
@@ -8,7 +8,7 @@ public class Filme implements Comparable<Filme> {
 	// ter um atributo comentário no filme OU Sessão
 	// se feito nos dois, é bônus
 
-	public Filme(String nome, Avaliacao nota, boolean favorito, String comentario) {
+	public Filme(String nome, boolean favorito, Avaliacao nota, String comentario) {
 		this.nome = nome;
 		this.nota = nota;
 		this.favorito = favorito;
@@ -64,13 +64,17 @@ public class Filme implements Comparable<Filme> {
 		this.comentario = comentario;
 	}
 
+	@Override
+	public String toString() {
+		return "Filme{" +
+				"nome='" + nome + '\'' +
+				", nota=" + nota +
+				", favorito=" + favorito +
+				", comentario='" + comentario + '\'' +
+				'}';
+	}
 
 	// outro adicional
 	// private Genero genero;
-	
-	@Override
-	public int compareTo(Filme filme) {
-		return nome.compareToIgnoreCase(filme.getNome());
-	}
 
 }
