@@ -55,7 +55,7 @@ public class Aplicacao {
 			System.out.println("| 6 - Listagem cronológica                  |");
 			System.out.println("| 7 - Listagem favoritos                    |");
 			System.out.println("+-------------------------------------------+");
-			System.out.print("\nOpcao: ");
+			System.out.print("\nOpção: ");
 			opcao = teclado.nextInt();
 			teclado.nextLine();
 			switch (opcao){
