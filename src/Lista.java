@@ -25,7 +25,9 @@ public class Lista implements Iterable<Sessao>{
 	}
 
 	// outros para ORDENACAO
-
+	public void add(Sessao sessao){
+		lista.add(sessao);
+	}
 	public ArrayList<Sessao> ordenaZA(){
 		ArrayList<Sessao> copia = new ArrayList<Sessao>();
 		copia.addAll(lista);

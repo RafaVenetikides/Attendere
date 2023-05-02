@@ -20,7 +20,7 @@ public class Filme implements Comparable<Filme> {
 		this.favorito = favorito;
 	}
 
-	public Filme(String nome, Avaliacao nota, boolean favorito) {
+	public Filme(String nome,  boolean favorito, Avaliacao nota) {
 		this.nome = nome;
 		this.nota = nota;
 		this.favorito = favorito;
