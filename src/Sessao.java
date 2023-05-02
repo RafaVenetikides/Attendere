@@ -89,6 +89,7 @@ public class Sessao implements Comparable<Sessao>{
 				'}';
 	}
 
+	@Override
 	public int compareTo(Sessao sessao) {
 		return getFilme().getNome().compareToIgnoreCase(sessao.getFilme().getNome());
 	}

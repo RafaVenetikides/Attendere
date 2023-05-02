@@ -50,13 +50,33 @@ public class Lista implements Iterable<Sessao>{
 			@Override
 			public int compare(Sessao o1, Sessao o2) {
 				if (o1.getFilme().getNota() == o2.getFilme().getNota()){
-					return o1.getFilme().getNome().compareToIgnoreCase(o2.getFilme().getNome());
+					return o1.compareTo(o2);
 				}
 				return o1.getFilme().getNota().compareTo(o2.getFilme().getNota());
 			}
 		});
 	}
-	
-	// toString
+	public void sortCronologico(){
+		Collections.sort(lista, new Comparator<Sessao>() {
+			@Override
+			public int compare(Sessao o1, Sessao o2) {
+				if (o1.getData() == o2.getData()) {
+					return o1.getHorario().compareTo(o2.getHorario());
+				}
+				return o1.getData().compareTo(o2.getData());
+			}
+		});
+	}
+	public void sortFavorito(){
+		Collections.sort(lista, new Comparator<Sessao>() {
+			@Override
+			public int compare(Sessao o1, Sessao o2) {
+				if (o1.getFilme().isFavorito() == o2.getFilme().isFavorito()){
+					return o1.compareTo(o2);
+				}
+				return o1.getFilme().isFavorito().compareTo(o2.getFilme().isFavorito());
+			}
+		}.reversed());
+	}
 
 }

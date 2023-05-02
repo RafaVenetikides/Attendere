@@ -70,6 +70,14 @@ public class Aplicacao {
 					watchlist.sortAvaliacao();
 					imprimelista();
 					break;
+				case 6:
+					watchlist.sortCronologico();
+					imprimelista();
+					break;
+				case 7:
+					watchlist.sortFavorito();
+					imprimelista();
+					break;
 			}
 
 		} while(opcao != 0);

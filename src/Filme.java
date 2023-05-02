@@ -2,7 +2,7 @@
 public class Filme {
 	private String nome;
 	private Avaliacao nota;
-	private boolean favorito;
+	private Boolean favorito;
 	// opcional
 	private String comentario;
 	// ter um atributo comentário no filme OU Sessão
@@ -48,11 +48,11 @@ public class Filme {
 		this.nota = nota;
 	}
 
-	public boolean isFavorito() {
+	public Boolean isFavorito() {
 		return favorito;
 	}
 
-	public void setFavorito(boolean favorito) {
+	public void setFavorito(Boolean favorito) {
 		this.favorito = favorito;
 	}
 
