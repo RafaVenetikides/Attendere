@@ -6,7 +6,19 @@
 // 1 - Ruim
 
 public enum Avaliacao {
-    five, four, three, two, one;
+    five("*****"),
+    four("**** "),
+    three("***  "),
+    two("**   "),
+    one("*    ");
+
+    private String descricao;
+    Avaliacao(String descricao){
+        this.descricao = descricao;
+    }
+    public String getDescricao(){
+        return descricao;
+    }
     public static Avaliacao fromInt(int valor){
         return switch (valor) {
             case 1 -> one;

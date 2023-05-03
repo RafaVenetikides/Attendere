@@ -1,18 +1,17 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Comparator;
 
 public class Sessao implements Comparable<Sessao>{
 	private Filme filme;
 	private Local local;
-	private float preco;
+	private Double preco;
 	private LocalDate data;
 	private LocalTime horario;
 	
 	// opcional
 	private String comentario;
 
-	public Sessao(Filme filme, Local local, float preco, LocalDate data, LocalTime horario, String comentario) {
+	public Sessao(Filme filme, Local local, Double preco, LocalDate data, LocalTime horario, String comentario) {
 		this.filme = filme;
 		this.local = local;
 		this.preco = preco;
@@ -21,7 +20,7 @@ public class Sessao implements Comparable<Sessao>{
 		this.comentario = comentario;
 	}
 
-	public Sessao(Filme filme, Local local, float preco, LocalDate data, LocalTime horario) {
+	public Sessao(Filme filme, Local local, Double preco, LocalDate data, LocalTime horario) {
 		this.filme = filme;
 		this.local = local;
 		this.preco = preco;
@@ -45,11 +44,11 @@ public class Sessao implements Comparable<Sessao>{
 		this.local = local;
 	}
 
-	public float getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(float preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 
@@ -79,14 +78,34 @@ public class Sessao implements Comparable<Sessao>{
 
 	@Override
 	public String toString() {
-		return "Sessao{" +
-				"filme=" + filme +
-				", local=" + local +
-				", preco=" + preco +
-				", data=" + data +
-				", horario=" + horario +
-				", comentario='" + comentario + '\'' +
-				'}';
+		if (comentario == null){
+			return "\t========== Sessao ==========" +
+					"\n" + filme +
+					"\n\tPreco: " + preco +
+					"\n\tData: " + data +
+					"\n\tHorario: " + horario +
+					"\n" + local
+					+ "\n\t=============================" +
+					"\n\n";
+		}else {
+			return "\t========== Sessao ==========" +
+					"\n" + filme +
+					"\n\tPreco: " + preco +
+					"\n\tData: " + data +
+					"\n\tHorario: " + horario +
+					"\n\tComentario: " + comentario +
+					"\n" + local
+					+ "\n\t=============================" +
+					"\n\n";
+		}
+
+	}
+
+	public String comentarioToString(){
+		return "Comentario: " + filme.getComentario();
+	}
+	public String avaliacaoToString(){
+		return "Avaliação: " + filme.getNota();
 	}
 
 	@Override

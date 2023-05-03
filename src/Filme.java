@@ -66,12 +66,28 @@ public class Filme {
 
 	@Override
 	public String toString() {
-		return "Filme{" +
-				"nome='" + nome + '\'' +
-				", nota=" + nota +
-				", favorito=" + favorito +
-				", comentario='" + comentario + '\'' +
-				'}';
+		if (nota == null && comentario == null){
+			return "\t---------- Filme ----------" +
+					"\n\tNome:" + nome +
+					"\n\tFavorito: " + favorito;
+		} else if (nota == null) {
+			return "\t---------- Filme ----------" +
+					"\n\tNome:" + nome +
+					"\n\tFavorito: " + favorito +
+					"\n\tcomentario: " + comentario;
+		} else if (comentario == null) {
+			return "\t---------- Filme ----------" +
+					"\n\tNome:" + nome +
+					"\n\tNota:" + nota.getDescricao() +
+					"\n\tFavorito: " + favorito;
+
+		} else {
+			return "\t---------- Filme ----------" +
+					"\n\tNome:" + nome +
+					"\n\tNota:" + nota.getDescricao() +
+					"\n\tFavorito: " + favorito +
+					"\n\tcomentario: " + comentario;
+		}
 	}
 
 	// outro adicional
