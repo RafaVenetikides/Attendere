@@ -10,10 +10,12 @@ public class Aplicacao {
 	// para simular o banco de dados dos locais
 	private static ArrayList<Local> locais = new ArrayList<Local>();
 
+	private static ArrayList<Genero> generos = new ArrayList<Genero>();
+
 	private static Scanner teclado = new Scanner(System.in);
 	// scanner
 	// etc..
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, EEE", new Locale("us", "US"));
+	DateTimeFormatter formattermesano = DateTimeFormatter.ofPattern("MMMM/yyy", Locale.getDefault());
 
 	public static void main(String[] args) {
 
@@ -37,16 +39,26 @@ public class Aplicacao {
 		locais.add(l2);
 		locais.add(l3);
 
-		Sessao s1 = new Sessao(new Filme("Star Wars: Uma Nova Esperança",  true, Avaliacao.fromInt(5),"legal :)"),
+		Genero g1 = new Genero("Ação");
+		Genero g2 = new Genero("Fantasia");
+		Genero g3 = new Genero("Scifi");
+		Genero g4 = new Genero("Zombie");
+
+		generos.add(g1);
+		generos.add(g2);
+		generos.add(g3);
+		generos.add(g4);
+
+		Sessao s1 = new Sessao(new Filme("Star Wars: Uma Nova Esperança", generos.get(2) ,true, Avaliacao.fromInt(5),"legal :)"),
 					locais.get(0),
 					15.50, LocalDate.of(2022, 7, 12), LocalTime.of(12, 30));
-		Sessao s2 = new Sessao(new Filme("Hobbit",  true, Avaliacao.fromInt(4),"massa :D"),
+		Sessao s2 = new Sessao(new Filme("Hobbit",  generos.get(1),true, Avaliacao.fromInt(4),"massa :D"),
 				locais.get(1),
 				21.50, LocalDate.of(2023, 8, 2), LocalTime.of(15, 0));
-		Sessao s3 = new Sessao(new Filme("Zombieland",  false, Avaliacao.fromInt(4),"bom :)"),
+		Sessao s3 = new Sessao(new Filme("Zombieland",  generos.get(3),false, Avaliacao.fromInt(4),"bom :)"),
 				locais.get(2),
 				35.50, LocalDate.of(2020, 9, 22), LocalTime.of(17, 45));
-		Sessao s4 = new Sessao(new Filme("Star Wars: A Vingança dos Sith",  true, Avaliacao.fromInt(5),"muito bom :)"),
+		Sessao s4 = new Sessao(new Filme("Star Wars: A Vingança dos Sith", generos.get(2) ,true, Avaliacao.fromInt(5),"muito bom :)"),
 				locais.get(2),
 				35.50, LocalDate.of(2021, 8, 19), LocalTime.of(18, 30));
 
@@ -137,9 +149,11 @@ public class Aplicacao {
 		Boolean favorito;
 		Avaliacao avaliacao = null;
 		String comentario = null;
+		Genero genero = new Genero();
 		System.out.println("======= DADOS DO FILME =======");
 		System.out.print("Informe o nome: ");
 		nome = teclado.nextLine();
+		genero = escolheGenero();
 		System.out.println("Deseja adicionar o Filme aos favoritos? (S/N)");
 		String resposta = teclado.nextLine();
 		favorito = resposta.toUpperCase().charAt(0) == 'S';
@@ -161,11 +175,11 @@ public class Aplicacao {
 			comentario = teclado.nextLine();
 		}
 		if(avaliacao == null && comentario == null){
-			return new Filme(nome, favorito);
+			return new Filme(nome, genero, favorito);
 		} else if (avaliacao == null) {
-			return new Filme(nome, favorito, comentario);
+			return new Filme(nome, genero,favorito, comentario);
 		} else{
-			return new Filme(nome, favorito, avaliacao);
+			return new Filme(nome, genero,favorito, avaliacao);
 		}
 	}
 	private static Local novolocal(){
@@ -251,9 +265,7 @@ public class Aplicacao {
 		}
 	}
 	private static void imprimelista(){
-		Iterator<Sessao> iterator = watchlist.iterator();
-		while (iterator.hasNext()){
-			Sessao sessao = iterator.next();
+		for (Sessao sessao : watchlist) {
 			System.out.println(sessao);
 		}
 	}
@@ -275,6 +287,33 @@ public class Aplicacao {
 			}
 		}
 		return null;
+	}
+	private static Genero escolheGenero(){
+		int opcao;
+
+		System.out.println("Qual o genero do filme? ");
+		System.out.println("[0] - Novo Genero");
+		for(int i = 0; i < generos.size(); i++){
+			System.out.println("[" + (i+1) + "] - " + generos.get(i).getNome());
+		}
+		opcao = teclado.nextInt();
+		teclado.nextLine();
+		if (opcao == 0){
+			return novoGenero();
+		}else {
+			return generos.get(opcao-1);
+		}
+	}
+	private static Genero novoGenero(){
+		String nome;
+		Genero g = new Genero();
+
+		System.out.print("Informe o nome do Genero: ");
+		nome = teclado.nextLine();
+
+		g.setNome(nome);
+		generos.add(g);
+		return g;
 	}
 }
 

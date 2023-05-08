@@ -107,7 +107,6 @@ public class Sessao implements Comparable<Sessao>{
 	public String avaliacaoToString(){
 		return "Avaliação: " + filme.getNota();
 	}
-
 	@Override
 	public int compareTo(Sessao sessao) {
 		return getFilme().getNome().compareToIgnoreCase(sessao.getFilme().getNome());

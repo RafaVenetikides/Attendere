@@ -8,26 +8,31 @@ public class Filme {
 	// ter um atributo comentário no filme OU Sessão
 	// se feito nos dois, é bônus
 
-	public Filme(String nome, boolean favorito, Avaliacao nota, String comentario) {
+	private Genero genero;
+	public Filme(String nome, Genero genero, boolean favorito, Avaliacao nota, String comentario) {
 		this.nome = nome;
 		this.nota = nota;
+		this.genero = genero;
 		this.favorito = favorito;
 		this.comentario = comentario;
 	}
 
-	public Filme(String nome, boolean favorito) {
+	public Filme(String nome, Genero genero, boolean favorito) {
 		this.nome = nome;
+		this.genero = genero;
 		this.favorito = favorito;
 	}
 
-	public Filme(String nome,  boolean favorito, Avaliacao nota) {
+	public Filme(String nome, Genero genero, boolean favorito, Avaliacao nota) {
 		this.nome = nome;
+		this.genero = genero;
 		this.nota = nota;
 		this.favorito = favorito;
 	}
 
-	public Filme(String nome, boolean favorito, String comentario) {
+	public Filme(String nome, Genero genero, boolean favorito, String comentario) {
 		this.nome = nome;
+		this.genero = genero;
 		this.favorito = favorito;
 		this.comentario = comentario;
 	}
@@ -64,26 +69,37 @@ public class Filme {
 		this.comentario = comentario;
 	}
 
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+
 	@Override
 	public String toString() {
 		if (nota == null && comentario == null){
 			return "\t---------- Filme ----------" +
 					"\n\tNome:" + nome +
+					"\n\t" + genero +
 					"\n\tFavorito: " + favorito;
 		} else if (nota == null) {
 			return "\t---------- Filme ----------" +
 					"\n\tNome:" + nome +
+					"\n\t" + genero +
 					"\n\tFavorito: " + favorito +
 					"\n\tcomentario: " + comentario;
 		} else if (comentario == null) {
 			return "\t---------- Filme ----------" +
 					"\n\tNome:" + nome +
+					"\n\t" + genero +
 					"\n\tNota:" + nota.getDescricao() +
 					"\n\tFavorito: " + favorito;
-
 		} else {
 			return "\t---------- Filme ----------" +
 					"\n\tNome:" + nome +
+					"\n\t" + genero +
 					"\n\tNota:" + nota.getDescricao() +
 					"\n\tFavorito: " + favorito +
 					"\n\tcomentario: " + comentario;
