@@ -29,12 +29,6 @@ public class Lista implements Iterable<Sessao>{
 	public void add(Sessao sessao){
 		lista.add(sessao);
 	}
-	public ArrayList<Sessao> ordenaZA(){
-		ArrayList<Sessao> copia = new ArrayList<Sessao>();
-		copia.addAll(lista);
-		Collections.sort(copia, Collections.reverseOrder());
-		return copia;
-	}
 	
 	@Override
 	public Iterator<Sessao> iterator() {
@@ -44,7 +38,6 @@ public class Lista implements Iterable<Sessao>{
 	public void ordemAlfabetica(){
 		Collections.sort(lista);
 	}
-
 	public void sortAvaliacao(){
 		Collections.sort(lista, new Comparator<Sessao>() {
 			@Override
@@ -77,6 +70,12 @@ public class Lista implements Iterable<Sessao>{
 				return o1.getFilme().isFavorito().compareTo(o2.getFilme().isFavorito());
 			}
 		}.reversed());
+	}
+	public int getTamanho(){
+		return lista.size();
+	}
+	public Sessao get(int i){
+		return lista.get(i);
 	}
 
 }

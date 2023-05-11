@@ -100,7 +100,6 @@ public class Sessao implements Comparable<Sessao>{
 		}
 
 	}
-
 	public String comentarioToString(){
 		return "Comentario: " + filme.getComentario();
 	}

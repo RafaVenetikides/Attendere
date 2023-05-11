@@ -81,7 +81,7 @@ public class Filme {
 	public String toString() {
 		if (nota == null && comentario == null){
 			return "\t---------- Filme ----------" +
-					"\n\tNome:" + nome +
+					"\n\tNome: " + nome +
 					"\n\t" + genero +
 					"\n\tFavorito: " + favorito;
 		} else if (nota == null) {

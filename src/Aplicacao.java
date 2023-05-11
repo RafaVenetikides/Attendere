@@ -15,7 +15,8 @@ public class Aplicacao {
 	private static Scanner teclado = new Scanner(System.in);
 	// scanner
 	// etc..
-	DateTimeFormatter formattermesano = DateTimeFormatter.ofPattern("MMMM/yyy", Locale.getDefault());
+    static DateTimeFormatter formattermesano = DateTimeFormatter.ofPattern("MMMM/yyy", Locale.getDefault());
+    static DateTimeFormatter formatterdata = DateTimeFormatter.ofPattern("(dd) EEEE", Locale.getDefault());
 
 	public static void main(String[] args) {
 
@@ -134,7 +135,7 @@ public class Aplicacao {
 					break;
 				case 6:
 					watchlist.sortCronologico();
-					imprimelista();
+					imprimeOrdemCronologica();
 					break;
 				case 7:
 					watchlist.sortFavorito();
@@ -267,6 +268,24 @@ public class Aplicacao {
 	private static void imprimelista(){
 		for (Sessao sessao : watchlist) {
 			System.out.println(sessao);
+		}
+	}
+	private static void imprimeOrdemCronologica(){
+		int flag = 0;
+		for(int i = 0; i < watchlist.getTamanho(); i++){
+			Sessao s = watchlist.get(i);
+			if(flag == 1) {
+				if(watchlist.get(i-1).getData().getMonth() != s.getData().getMonth()) {
+					System.out.println(formattermesano.format(s.getData()));
+					System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+				} else {
+					System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+				}
+			} else {
+				System.out.println(formattermesano.format(s.getData()));
+				System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+				flag = 1;
+			}
 		}
 	}
 	private static Sessao procuraSessao(){
