@@ -89,7 +89,7 @@ public class Filme {
 					"\n\tNome:" + nome +
 					"\n\t" + genero +
 					"\n\tFavorito: " + favorito +
-					"\n\tcomentario: " + comentario;
+					"\n\tcomentario do filme: " + comentario;
 		} else if (comentario == null) {
 			return "\t---------- Filme ----------" +
 					"\n\tNome:" + nome +
@@ -102,7 +102,7 @@ public class Filme {
 					"\n\t" + genero +
 					"\n\tNota:" + nota.getDescricao() +
 					"\n\tFavorito: " + favorito +
-					"\n\tcomentario: " + comentario;
+					"\n\tcomentario do Filme: " + comentario;
 		}
 	}
 

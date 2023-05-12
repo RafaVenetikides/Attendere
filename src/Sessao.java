@@ -93,7 +93,7 @@ public class Sessao implements Comparable<Sessao>{
 					"\n\tPreco: " + preco +
 					"\n\tData: " + data +
 					"\n\tHorario: " + horario +
-					"\n\tComentario: " + comentario +
+					"\n\tComentario da sessão: " + comentario +
 					"\n" + local
 					+ "\n\t=============================" +
 					"\n\n";

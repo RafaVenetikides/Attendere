@@ -15,8 +15,9 @@ public class Aplicacao {
 	private static Scanner teclado = new Scanner(System.in);
 	// scanner
 	// etc..
-    static DateTimeFormatter formattermesano = DateTimeFormatter.ofPattern("MMMM/yyy", Locale.getDefault());
-    static DateTimeFormatter formatterdata = DateTimeFormatter.ofPattern("(dd) EEEE", Locale.getDefault());
+    private static DateTimeFormatter formattermesano = DateTimeFormatter.ofPattern("MMMM/yyy", new Locale("pt", "BR"));
+    private static DateTimeFormatter formatterdata = DateTimeFormatter.ofPattern("dd (EE HH:mm)", new Locale("pt", "BR"));
+    private static DateTimeFormatter formatterdattacompleta = DateTimeFormatter.ofPattern("dd/MM/yyyy, EEEE", new Locale("pt", "BR"));
 
 	public static void main(String[] args) {
 
@@ -50,9 +51,9 @@ public class Aplicacao {
 		generos.add(g3);
 		generos.add(g4);
 
-		Sessao s1 = new Sessao(new Filme("Star Wars: Uma Nova Esperança", generos.get(2) ,true, Avaliacao.fromInt(5),"legal :)"),
+		Sessao s1 = new Sessao(new Filme("Star Wars: Uma Nova Esperança", generos.get(2) ,true, Avaliacao.fromInt(4),"legal :)"),
 					locais.get(0),
-					15.50, LocalDate.of(2022, 7, 12), LocalTime.of(12, 30));
+					15.50, LocalDate.of(2022, 7, 12), LocalTime.of(12, 30), "Pegamos ótimos lugares");
 		Sessao s2 = new Sessao(new Filme("Hobbit",  generos.get(1),true, Avaliacao.fromInt(4),"massa :D"),
 				locais.get(1),
 				21.50, LocalDate.of(2023, 8, 2), LocalTime.of(15, 0));
@@ -127,11 +128,11 @@ public class Aplicacao {
 					break;
 				case 4:
 					watchlist.ordemAlfabetica();
-					imprimelista();
+					imprimeAZ();
 					break;
 				case 5:
 					watchlist.sortAvaliacao();
-					imprimelista();
+					imprimeAvaliacao();
 					break;
 				case 6:
 					watchlist.sortCronologico();
@@ -139,7 +140,7 @@ public class Aplicacao {
 					break;
 				case 7:
 					watchlist.sortFavorito();
-					imprimelista();
+					imprimeFavoritos();
 					break;
 			}
 
@@ -270,24 +271,62 @@ public class Aplicacao {
 			System.out.println(sessao);
 		}
 	}
+    private static void imprimeAZ(){
+        System.out.println("Listagem em ordem alfabética: \n");
+        for(Sessao s : watchlist){
+            System.out.println(s.getFilme().getNome() + " " + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+        }
+        System.out.println("\n");
+    }
 	private static void imprimeOrdemCronologica(){
 		int flag = 0;
+        System.out.println("Listagem em ordem cronológica: \n");
 		for(int i = 0; i < watchlist.getTamanho(); i++){
 			Sessao s = watchlist.get(i);
 			if(flag == 1) {
-				if(watchlist.get(i-1).getData().getMonth() != s.getData().getMonth()) {
+				if((watchlist.get(i-1).getData().getMonth() != s.getData().getMonth()) || (watchlist.get(i-1).getData().getYear() != s.getData().getYear())) {
 					System.out.println(formattermesano.format(s.getData()));
-					System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+					System.out.println(formatterdata.format(s.getData().atTime(s.getHorario()))  + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
 				} else {
-					System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+					System.out.println(formatterdata.format(s.getData().atTime(s.getHorario()))  + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
 				}
 			} else {
 				System.out.println(formattermesano.format(s.getData()));
-				System.out.println(formatterdata.format(s.getData()) + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
+				System.out.println(formatterdata.format(s.getData().atTime(s.getHorario()))  + " - " + s.getFilme().getNome() + " - " + s.getLocal().getNome());
 				flag = 1;
 			}
 		}
+        System.out.println("\n");
 	}
+    private static void imprimeAvaliacao(){
+        int flag = 0;
+        System.out.println("Listagem por avaliação: \n");
+        for(int i = 0; i < watchlist.getTamanho(); i++){
+            Sessao s = watchlist.get(i);
+            if(flag == 1){
+                if (watchlist.get(i-1).getFilme().getNota() != s.getFilme().getNota()){
+                    System.out.println("(" + s.getFilme().getNota().getDescricao() + ")");
+                    System.out.println(s.getFilme().getNome() + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+                } else {
+                    System.out.println(s.getFilme().getNome() + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+                }
+            } else{
+                System.out.println("(" + s.getFilme().getNota().getDescricao() + ")");
+                System.out.println(s.getFilme().getNome() + " " + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+                flag = 1;
+            }
+        }
+        System.out.println("\n");
+    }
+    private static void imprimeFavoritos(){
+        System.out.println("Listagem dos favoritos: \n");
+        for(Sessao s : watchlist){
+            if(s.getFilme().isFavorito()){
+                System.out.println(s.getFilme().getNome() + " " + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+            }
+        }
+        System.out.println("\n");
+    }
 	private static Sessao procuraSessao(){
 
 		String nome;
@@ -297,7 +336,7 @@ public class Aplicacao {
 		nome = teclado.nextLine();
 
 		for (Sessao s : watchlist){
-			if (s.getFilme().getNome().startsWith(nome)){
+			if (s.getFilme().getNome().toLowerCase().startsWith(nome.toLowerCase())){
 				System.out.println(s.getFilme().getNome() + " é o filme procurado? (S/N)");
 				resposta = teclado.nextLine();
 				if (resposta.equalsIgnoreCase("S")){
