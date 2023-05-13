@@ -57,7 +57,7 @@ public class Aplicacao {
 		Sessao s2 = new Sessao(new Filme("Hobbit",  generos.get(1),true, Avaliacao.fromInt(4),"massa :D"),
 				locais.get(1),
 				21.50, LocalDate.of(2023, 8, 2), LocalTime.of(15, 0));
-		Sessao s3 = new Sessao(new Filme("Zombieland",  generos.get(3),false, Avaliacao.fromInt(4),"bom :)"),
+		Sessao s3 = new Sessao(new Filme("Zombieland",  generos.get(3),false,"bom :)"),
 				locais.get(2),
 				35.50, LocalDate.of(2020, 9, 22), LocalTime.of(17, 45));
 		Sessao s4 = new Sessao(new Filme("Star Wars: A Vingança dos Sith", generos.get(2) ,true, Avaliacao.fromInt(5),"muito bom :)"),
@@ -152,6 +152,7 @@ public class Aplicacao {
 		Avaliacao avaliacao = null;
 		String comentario = null;
 		Genero genero = new Genero();
+
 		System.out.println("======= DADOS DO FILME =======");
 		System.out.print("Informe o nome: ");
 		nome = teclado.nextLine();
@@ -180,8 +181,10 @@ public class Aplicacao {
 			return new Filme(nome, genero, favorito);
 		} else if (avaliacao == null) {
 			return new Filme(nome, genero,favorito, comentario);
-		} else{
+		} else if (comentario == null){
 			return new Filme(nome, genero,favorito, avaliacao);
+		} else {
+			return new Filme(nome, genero, favorito, avaliacao, comentario);
 		}
 	}
 	private static Local novolocal(){
@@ -304,17 +307,26 @@ public class Aplicacao {
         for(int i = 0; i < watchlist.getTamanho(); i++){
             Sessao s = watchlist.get(i);
             if(flag == 1){
+				if(s.getFilme().getNota() != null){
                 if (watchlist.get(i-1).getFilme().getNota() != s.getFilme().getNota()){
                     System.out.println("(" + s.getFilme().getNota().getDescricao() + ")");
                     System.out.println(s.getFilme().getNome() + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
                 } else {
                     System.out.println(s.getFilme().getNome() + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
                 }
-            } else{
+				}else {
+					System.out.println("(Sem avaliação)");
+					System.out.println(s.getFilme().getNome() + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+				}
+            } else if (s.getFilme().getNota() != null){
                 System.out.println("(" + s.getFilme().getNota().getDescricao() + ")");
                 System.out.println(s.getFilme().getNome() + " " + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
                 flag = 1;
-            }
+            } else {
+				System.out.println("(Sem avaliação)");
+				System.out.println(s.getFilme().getNome() + " " + formatterdattacompleta.format(s.getData()) + " - " + s.getLocal().getNome());
+				flag = 1;
+			}
         }
         System.out.println("\n");
     }

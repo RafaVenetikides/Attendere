@@ -42,11 +42,17 @@ public class Lista implements Iterable<Sessao>{
 		Collections.sort(lista, new Comparator<Sessao>() {
 			@Override
 			public int compare(Sessao o1, Sessao o2) {
-				if (o1.getFilme().getNota() == o2.getFilme().getNota()){
+				if (o1.getFilme().getNota() != null && o2.getFilme().getNota() != null) {
+					if (o1.getFilme().getNota() == o2.getFilme().getNota()) {
+						return o1.compareTo(o2);
+					} else {
+						return o1.getFilme().getNota().compareTo(o2.getFilme().getNota());
+					}
+				} else {
 					return o1.compareTo(o2);
 				}
-				return o1.getFilme().getNota().compareTo(o2.getFilme().getNota());
 			}
+
 		});
 	}
 	public void sortCronologico(){
